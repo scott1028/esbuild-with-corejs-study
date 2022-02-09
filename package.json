@@ -1,0 +1,19 @@
+{
+  "name": "esbuild-with-corejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "yarn build:test --outfile=dist/out.js --target=es2015",
+    "build:test": "esbuild index.js --bundle --sourcemap --outfile=out.js",
+    "prebuild:esnext": "rm -rf dist.esnext",
+    "build:esnext": "yarn build:test --outfile=dist.esnext/out.js"
+  },
+  "dependencies": {
+    "core-js": "3.21.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.21"
+  }
+}
