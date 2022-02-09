@@ -4,16 +4,26 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "prebuild": "rm -rf dist",
-    "build": "yarn build:test --outfile=dist/out.js --target=es2015",
     "build:test": "esbuild index.js --bundle --sourcemap --outfile=out.js",
+    "prebuild": "rm -rf dist",
     "prebuild:esnext": "rm -rf dist.esnext",
-    "build:esnext": "yarn build:test --outfile=dist.esnext/out.js"
+    "prebuild:babel": "rm -rf dist.babel",
+    "build": "yarn build:test --outfile=dist/out.js --target=es2015",
+    "build:esnext": "yarn build:test --outfile=dist.esnext/out.js",
+    "build:babel": "babel index.js --source-maps --out-file dist.babel/babel.out.js --presets=@babel/preset-env --plugins=@babel/plugin-transform-runtime",
+    "build:babel-webpack": "yarn build:babel && yarn webpack-cli ./dist.babel/babel.out.js --mode=development --target=web -o ./dist.babel && mv ./dist.babel/main.js ./dist.babel/out.js",
+    "build:all": "yarn build && yarn build:esnext && yarn build:babel && yarn build:babel-webpack"
   },
   "dependencies": {
-    "core-js": "3.21.0"
+    "core-js": "3.21.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "esbuild": "^0.14.21"
+    "@babel/cli": "^7.17.0",
+    "@babel/core": "^7.17.2",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "esbuild": "^0.14.21",
+    "webpack-cli": "^4.9.2"
   }
 }

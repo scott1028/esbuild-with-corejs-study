@@ -5,5 +5,5 @@
 
 (async function() {
   const test = 1;
-  console.log(test);
+  console.log(test, document.body);
 })();
